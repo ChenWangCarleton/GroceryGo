@@ -22,7 +22,8 @@ public class ServerRequset {
 
     public ServerRequset() throws UnknownHostException {
         //this.clientSocket = bind();
-        serverAddress = InetAddress.getByName("174.115.82.38");
+        System.out.println("heeeeerrre11111");
+        serverAddress = InetAddress.getByName("192.168.0.104");
         try {
             clientSocket = new Socket(serverAddress, SERVER_RECV_PORT);
         } catch (IOException e) {
@@ -32,6 +33,8 @@ public class ServerRequset {
 
     public String initialize(String type) throws UnknownHostException {
         try {
+            System.out.println("heeeeerrre22222");
+
             return sendRequest(SERVER_RECV_PORT, type);
         } catch (IOException e) {
             return null;
@@ -43,6 +46,7 @@ public class ServerRequset {
         //clientSocket = new Socket(serverAddress, SERVER_RECV_PORT);
         byte[] msg = new byte[516], productIDbyte;
         byte opCode;
+        System.out.println("heeeeerrre33333");
 
         // System.out.println(productID);
 
@@ -83,6 +87,7 @@ public class ServerRequset {
     }
 
     private String receive() {
+        System.out.println("heeeeerrre4444");
 
         //int PacketNumber = 1;
 
@@ -120,9 +125,11 @@ public class ServerRequset {
     }
 
     private Socket bind() {
+        System.out.println("heeeeerrre55555");
+
         Socket socket = null;
         try {
-            serverAddress = InetAddress.getByName("174.115.82.38");
+            serverAddress = InetAddress.getByName("192.168.0.104");
             clientSocket = new Socket(serverAddress, SERVER_RECV_PORT);
         } catch (IOException e) {
             e.printStackTrace();
@@ -132,6 +139,8 @@ public class ServerRequset {
 
     //Functions to translate data recived by server.
     public ArrayList<Product> readGetAll(String jsonStr) throws  Exception{
+        System.out.println("heeeeerrre6666");
+
         //	ArrayList<itemForGetAll> result=new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
         ArrayList<Product> result = mapper.readValue(jsonStr, TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Product.class));
@@ -139,18 +148,23 @@ public class ServerRequset {
     }
 
     public Product readSearchID(String jsonStr) throws Exception{
+        System.out.println("heeeeerrre7777");
+
         ObjectMapper mapper = new ObjectMapper();
         Product result = mapper.readValue(jsonStr, Product.class);
         return result;
     }
 
     public ArrayList<Product> readProcess(String jsonStr) throws Exception{
+        System.out.println("heeeeerrre8888");
+
         ObjectMapper mapper = new ObjectMapper();
         ArrayList<Product> result = mapper.readValue(jsonStr, TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Product.class));
         return result;
     }
 
     public Product getItem(int id) throws UnknownHostException {
+        System.out.println("heeeeerrre9999");
 
         try {
             return readSearchID(initialize(""+id));

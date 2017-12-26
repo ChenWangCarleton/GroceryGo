@@ -143,11 +143,11 @@ public class Process extends AppCompatActivity {
         //Log.e("Test", ""+location.getLatitude());
         //Log.e("Test", ""+location.getLongitude());
 
-        userLit =location.getLatitude();
-        userLong=location.getLongitude();
+      // userLit =location.getLatitude();
+       // userLong=location.getLongitude();
 
-        /*userLit = 45.3833400;
-        userLong = -75.6988720;*/
+      userLit = 45.3833400;
+        userLong = -75.6988720;
 
 
         walURL = getUrl(userLit,userLong,"Walmart");
@@ -256,7 +256,7 @@ public class Process extends AppCompatActivity {
 
 
 
-                        userList.removeAll();
+                      //  userList.removeAll();
                         userList.close();
 
 
