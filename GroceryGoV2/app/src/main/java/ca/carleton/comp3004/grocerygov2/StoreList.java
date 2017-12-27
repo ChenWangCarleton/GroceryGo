@@ -3,6 +3,8 @@ package ca.carleton.comp3004.grocerygov2;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,8 +21,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public class StoreList extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    String rawData = null;
-    ArrayList<Product> data;
+    //String rawData = null;
+   ArrayList<Product> data;
     ArrayList<String> listInfo = new ArrayList<String>();
     ArrayList<String> cats = new ArrayList<String>();
     ListView store;
@@ -34,9 +36,26 @@ public class StoreList extends AppCompatActivity implements AdapterView.OnItemCl
         setContentView(R.layout.activity_store_list);
         pd = ProgressDialog.show(this, "Processing...", "Retrieving store products.", true, false);
 
+        ((Details)this.getApplication()).updateRawData();
+        int counter=0;
+        while(((Details)this.getApplication()).isUpdating()){
+            try{
+                Thread.sleep(500);
+                System.out.println("waiting....... for the "+(counter++)+" times");
+            }
+            catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+
+        data=((Details)this.getApplication()).getData();
 
 
-        try {
+        if(pd.isShowing()){
+            pd.dismiss();
+        }
+
+     /*   try {
             request = new ServerRequset();
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -71,7 +90,7 @@ public class StoreList extends AppCompatActivity implements AdapterView.OnItemCl
 
             }
         });
-        thread.start();
+        thread.start();*/
 
 
 

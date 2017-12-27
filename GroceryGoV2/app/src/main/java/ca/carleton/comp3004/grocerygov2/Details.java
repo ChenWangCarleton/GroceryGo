@@ -2,7 +2,11 @@ package ca.carleton.comp3004.grocerygov2;
 
 import android.app.Application;
 
+import java.lang.reflect.Array;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+
+import static com.google.android.gms.internal.zzagr.runOnUiThread;
 
 /**
  * Created by natsu on 12/26/2017.
@@ -11,14 +15,64 @@ import java.util.ArrayList;
 public class Details extends Application {
     private ArrayList<Product> data;
     private String rawData;
-
+    private ServerRequset request=null;//new ServerRequset();
+    private int version=0;
+    private boolean updating=false;
     public String getRawData(){
         return rawData;
     }
     public void setRawData(String source){
         rawData=source;
     }
-    public void updataRawData(){
+    public ArrayList<Product> getData(){return data;}
+    public void setData(ArrayList<Product> p){data=p;}
+    public boolean isUpdating(){return updating;}
+    public int getVersion(){return version;}
+    public void updateRawData(){
+        updating=true;
+        if(version==1){//here will add version check with the server. so that if the version are the same, there's no need to retrieve again from the server
+            updating=false;
+            return;
+        }
+        try {
+            request = new ServerRequset();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
 
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    rawData = request.initialize("all");
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                if(rawData != null) {
+                    try {
+                        data = request.readGetAll(rawData);
+                        version=version+1;
+                        updating=false;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+          /*      runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(rawData != null) {
+                            try {
+                                data = request.readGetAll(rawData);
+                                updating=false;
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });*/
+
+            }
+        });
+        thread.start();
     }
 }
