@@ -15,6 +15,9 @@ public class MainPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
+       // ((Details)this.getApplication()).updateRawData(); will force app to stop
+
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
@@ -45,6 +48,6 @@ public class MainPage extends AppCompatActivity {
             }
         });
 
-
+       ((Details)this.getApplication()).updateRawData();
     }
 }
