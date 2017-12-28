@@ -134,7 +134,7 @@ public class StoreList extends AppCompatActivity implements AdapterView.OnItemCl
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
+            //
             @Override
             public void afterTextChanged(Editable editable) {
                 listInfo.clear();
@@ -142,6 +142,7 @@ public class StoreList extends AppCompatActivity implements AdapterView.OnItemCl
 
                 if(!searchWord.equals("")){
                     //Return all possible items with the word of choice.
+                    listInfo.add("Go Back");
                     for (Product e: data) {
                         if(e.na.toLowerCase().indexOf(searchWord.toLowerCase()) != -1)
                             listInfo.add(e.na);
@@ -165,8 +166,13 @@ public class StoreList extends AppCompatActivity implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         TextView selected = (TextView) view;
-        listInfo.clear();
+        //listInfo.clear();
         if(selected.getText().toString().equals("Go Back")){
+////////////////
+            EditText search = findViewById(R.id.searchBar);
+
+            search.setText("");
+            listInfo.clear();
             for(String e: cats){
                 listInfo.add(e);
             }
